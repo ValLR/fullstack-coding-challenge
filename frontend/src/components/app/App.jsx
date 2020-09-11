@@ -20,7 +20,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    history.listen(() => {
+    history.listen((location, action) => {
       this.props.clearAlerts();
     });
   }
@@ -53,5 +53,9 @@ function mapState(state) {
   }
 }
 
-const connectedApp = connect(mapState)(App);
+const actionCreators = {
+  clearAlerts: alertActions.clear
+};
+
+const connectedApp = connect(mapState, actionCreators)(App);
 export default connectedApp;

@@ -6,10 +6,6 @@ import { store } from './helpers';
 import ConnectedApp from './components/app/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// setup mock backend
-import { setupMockBackend } from './helpers';
-setupMockBackend();
-
 render(
     <Provider store={store}>
         <ConnectedApp />
