@@ -15,14 +15,16 @@ import './App.css';
 
 export default function App() {
   return (
-    <Router history={history}>
-      <Switch>
-        <Route exact path={'/create-account'}>
-          <CreateUserPage />
-        </Route>
-        <Redirect from="*" to="/create-account" />
-      </Switch>
-    </Router>
+    <div id="content">
+      <Router history={history}>
+        <Switch>
+          <Route exact path={'/create-account'}>
+            <CreateUserPage />
+          </Route>
+          <Redirect from="*" to="/create-account" />
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
