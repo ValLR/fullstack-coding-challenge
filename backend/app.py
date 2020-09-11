@@ -61,6 +61,29 @@ def add_user():
 
   return user_schema.jsonify(new_user)
   
+# Login
+@app.route('/login')
+def login():
+  auth = request.authorization
+  if not auth or not auth.username or not auth.password:
+    return abort(401, 'No pudimos verificar sus credenciales')
+
+  user = User.query.filter_by(email=auth.username).first()
+  if not user:
+    return abort(401, 'No pudimos encontrar al usuario ingresado')
+  
+  if (user.password == auth.password):
+    user_data = {}
+    user_data['firstName'] = user.firstName
+    user_data['lastName'] = user.lastName
+    user_data['email'] = user.email
+    user_data['password'] = user.password
+    user_data['gender'] = user.gender
+
+    return jsonify({'user' : user_data})
+
+  return abort(401, 'Por favor inicie sesión')
+
 # Run Server
 if __name__ == '__main__':
   app.run(debug=True)
