@@ -11,7 +11,7 @@ export function setupMockBackend() {
         let newUser = JSON.parse(opts.body);
 
         // validation
-        let duplicateUser = users.filter(user => { return user.username === newUser.username; }).length;
+        let duplicateUser = users.filter(user => { return user.email === newUser.email; }).length;
         if (duplicateUser) {
           reject('email "' + newUser.email + '" is already associated to an account');
           return;
@@ -25,6 +25,30 @@ export function setupMockBackend() {
         // respond 200 OK
         resolve({ ok: true, text: () => Promise.resolve() });
 
+        return;
+      }
+
+      // authentication
+      if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
+        let params = JSON.parse(opts.body);
+
+        const match = users.find(user => (user.email === params.email && user.password === params.password));
+        
+        if (match) {
+          let responseJson = {
+            id: match.id,
+            email: match.email,
+            firstName: match.firstname,
+            lastName: match.lastName,
+            token: 'jwt-token'
+          };
+          resolve({
+            ok: true,
+            text: () => Promise.resolve(JSON.stringify(responseJson))
+          });
+        } else {
+          reject('Incorrect credentials')
+        }
         return;
       }
 

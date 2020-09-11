@@ -57,11 +57,11 @@ class CreateUser extends Component {
         <div className="content-container" id="create-user">
           <Form className="form">
             <FormGroup>
-              <Label for='firstName'>Nombre</Label>
+              <Label for="firstName">Nombre</Label>
               <Input onChange={this.handleChange} type="text" name="firstName" id="firstName" placeholder="Ej: Juan" />
             </FormGroup>
             <FormGroup>
-              <Label for='lastName'>Apellido</Label>
+              <Label for="lastName">Apellido</Label>
               <Input onChange={this.handleChange} type="text" name="lastName" id="lastName" placeholder="Ej: Pérez" />
             </FormGroup>
             <FormGroup>

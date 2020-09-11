@@ -11,6 +11,7 @@ import { alertActions } from '../../actions';
 import { history } from '../../helpers';
 
 import CreateUserPage from '../createUser/CreateUser';
+import Login from '../login/Login';
 import './App.css';
 
 export default function App() {
@@ -18,10 +19,13 @@ export default function App() {
     <div id="content">
       <Router history={history}>
         <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
           <Route exact path={'/create-account'}>
             <CreateUserPage />
           </Route>
-          <Redirect from="*" to="/create-account" />
+          <Redirect from="*" to="/" />
         </Switch>
       </Router>
     </div>
