@@ -3,6 +3,7 @@ import {
   Button, 
   Form, 
   FormGroup, 
+  FormFeedback,
   Label, 
   Input
 } from 'reactstrap';
@@ -22,6 +23,7 @@ class CreateUser extends Component {
         email: '',
         password: '',
       },
+      isSubmitted: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,26 +42,57 @@ class CreateUser extends Component {
     });
   }
 
+  emailValidation = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  passwordValidation = (password) => {
+    return (password.length >= 8 && /[*@!#%&()^~{}]+/.test(password))
+  }
+
+  nameValidation = (name) => name.length > 0;
+
   handleSubmit(e) {
     e.preventDefault();
+
+    this.setState({
+      isSubmitted: true
+    });
 
     const { user } = this.state;
     const { register } = this.props;
 
-    register(user);
+    const obj = {...user};
+    if (user.lastName.length === 0) {
+      delete obj['lastName'];
+    }
+    if (
+      this.nameValidation(user.firstName)
+      && this.emailValidation(user.email)
+      && this.passwordValidation(user.password)
+    ) {
+      register(obj); 
+    }
   }
 
   render() {
-    const { user } = this.state;
-    console.log(user.gender);
+    const { user, isSubmitted } = this.state;
     return (
       <div>
         <h1 className="title">Crear usuario</h1>
         <div className="content-container" id="create-user">
           <Form className="form">
-            <FormGroup>
+            <FormGroup validate={isSubmitted && !this.nameValidation(user.firstName)}>
               <Label for="firstName">Nombre</Label>
-              <Input onChange={this.handleChange} type="text" name="firstName" id="firstName" placeholder="Ej: Juan" />
+              <Input
+                onChange={this.handleChange}
+                type="text"
+                name="firstName"
+                id="firstName"
+                placeholder="Ej: Juan"
+                invalid={(isSubmitted && !this.nameValidation(user.firstName))}
+              />
+              <FormFeedback>Campo obligatorio</FormFeedback>
             </FormGroup>
             <FormGroup>
               <Label for="lastName">Apellido</Label>
@@ -75,11 +108,29 @@ class CreateUser extends Component {
             </FormGroup>
             <FormGroup>
               <Label for="email">Email</Label>
-              <Input onChange={this.handleChange} type="email" name="email" id="email" placeholder="Ej: usuario@ejemplo.com" />
+              <Input
+                onChange={this.handleChange}
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Ej: usuario@ejemplo.com"
+                invalid={isSubmitted && !this.emailValidation(user.email)}  
+              />
+              <FormFeedback>Ingrese un email válido</FormFeedback>
             </FormGroup>
             <FormGroup>
               <Label for="password">Contraseña</Label>
-              <Input onChange={this.handleChange} type="password" name="password" id="password" placeholder="Ingrese contraseña" />
+              <Input
+                onChange={this.handleChange}
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Ingrese contraseña"
+                invalid={isSubmitted && !this.passwordValidation(user.password)}
+              />
+              <FormFeedback>
+                Su contraseña debe incluir al menos 1 caracter especial (ej: $%...) y tener al menos 8 caracteres
+              </FormFeedback>
             </FormGroup>
             <Button onClick={this.handleSubmit}>
               Crear Usuario
