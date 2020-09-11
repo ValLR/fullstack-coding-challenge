@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { store } from './helpers';
-import App from './components/app/App';
+import ConnectedApp from './components/app/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // setup mock backend
@@ -12,7 +12,7 @@ setupMockBackend();
 
 render(
     <Provider store={store}>
-        <App />
+        <ConnectedApp />
     </Provider>,
     document.getElementById('root')
 );

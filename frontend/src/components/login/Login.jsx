@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { 
   Button, 
   Form, 
-  FormGroup, 
+  FormGroup,
+  FormFeedback,
   Label,
   Input
 } from 'reactstrap';
@@ -21,6 +22,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      isSubmitted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,13 +40,20 @@ class Login extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    this.setState({
+      isSubmitted: true
+    });
+
     const { email, password } = this.state;
     const { login } = this.props;
 
-    login(email, password);
+    if (email.length > 0 && password.length > 0) {
+      login(email, password);
+    }
   }
 
   render() {
+    const { email, password, isSubmitted } = this.state;
     return (
       <div>
         <h1 className="title">Iniciar sesión</h1>
@@ -61,7 +70,9 @@ class Login extends Component {
                 name="email"
                 id="email"
                 placeholder="Ej: usuario@ejemplo.com"
+                invalid={isSubmitted && email.length < 1}
               />
+              <FormFeedback>Campo obligatorio</FormFeedback>
             </FormGroup>
             <FormGroup>
               <Label for="password">Contraseña</Label>
@@ -71,7 +82,9 @@ class Login extends Component {
                 name="password"
                 id="password"
                 placeholder="Ingrese contraseña"
+                invalid={isSubmitted && password.length < 1}
               />
+              <FormFeedback>Campo obligatorio</FormFeedback>
             </FormGroup>
             <div className="d-flex">
               <Button onClick={this.handleSubmit}>

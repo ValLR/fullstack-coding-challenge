@@ -6,28 +6,45 @@ import {
   Redirect
 } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Alert } from 'reactstrap';
 
+import { alertActions } from '../../actions';
 import { history } from '../../helpers';
-
 import PrivateRoute from '../PrivateRoute';
 import CreateUserPage from '../createUser/CreateUser';
 import Login from '../login/Login';
 import Home from '../home/Home';
 import './App.css';
 
-export default function App() {
-  return (
-    <div id="content">
-      <Router history={history}>
-        <Switch>
-          <PrivateRoute exact path={'/create-account'} component={CreateUserPage} loggedIn={false} />
-          <Route path={'/login'} component={Login} />
-          <PrivateRoute exact path={'/'} component={Home} loggedIn />
-          <Redirect from="*" to="/" />
-        </Switch>
-      </Router>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    history.listen(() => {
+      this.props.clearAlerts();
+    });
+  }
+
+  render() {
+    const { alert } = this.props;
+    return (
+      <div id="content">
+        {alert.message && (
+          <Alert color={alert.type}>
+            {alert.message}
+          </Alert>
+        )}
+        <Router history={history}>
+          <Switch>
+            <PrivateRoute exact path={'/create-account'} component={CreateUserPage} loggedIn={false} />
+            <Route path={'/login'} component={Login} />
+            <PrivateRoute exact path={'/'} component={Home} loggedIn />
+            <Redirect from="*" to="/" />
+          </Switch>
+        </Router>
+      </div>
+    );
+  }
 }
 
 function mapState(state) {
@@ -37,4 +54,4 @@ function mapState(state) {
 }
 
 const connectedApp = connect(mapState)(App);
-export { connectedApp as App };
+export default connectedApp;

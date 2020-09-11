@@ -13,7 +13,7 @@ export function setupMockBackend() {
         // validation
         let duplicateUser = users.filter(user => { return user.email === newUser.email; }).length;
         if (duplicateUser) {
-          reject('email "' + newUser.email + '" is already associated to an account');
+          reject('email "' + newUser.email + '" está asociado a otra cuenta');
           return;
         }
 
@@ -48,7 +48,7 @@ export function setupMockBackend() {
             text: () => Promise.resolve(JSON.stringify(responseJson))
           });
         } else {
-          reject('Incorrect credentials')
+          reject('Credenciales incorrectas')
         }
         return;
       }

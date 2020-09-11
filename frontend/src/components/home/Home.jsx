@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../actions';
 import image from '../../images/legalbot-logo-vertical.png';
 import './home.css';
 
