@@ -38,8 +38,9 @@ export function setupMockBackend() {
           let responseJson = {
             id: match.id,
             email: match.email,
-            firstName: match.firstname,
+            firstName: match.firstName,
             lastName: match.lastName,
+            gender: match.gender,
             token: 'jwt-token'
           };
           resolve({

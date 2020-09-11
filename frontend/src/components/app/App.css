@@ -3,12 +3,14 @@ html, body, #root {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.title, .content-container .form label {
+.title,
+.content-container .form label,
+a.btn {
   color: #00305C;
   font-weight: 600;
 }
 
-.highlight {
+.highlight-text {
   color: #FF206D;
 }
 
@@ -26,7 +28,8 @@ button.btn {
   border: 1px solid white;
 }
 
-.grey-text {
+.grey-text,
+a.btn:hover  {
   color: rgb(147, 164, 170);
 }
 

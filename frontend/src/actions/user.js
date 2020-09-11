@@ -6,6 +6,7 @@ import { history } from '../helpers';
 
 export const userActions = { 
   login,
+  logout,
   register,
 };
 
@@ -44,6 +45,13 @@ function login(email, password) {
       error
     }
   }
+}
+
+function logout() {
+  userService.logout();
+  return {
+    type: userConstants.LOGOUT
+  };
 }
 
 function register(user) {

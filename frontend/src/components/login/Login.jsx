@@ -16,6 +16,7 @@ import './login.css';
 class Login extends Component {
   constructor(props) {
     super(props);
+    this.props.logout();
 
     this.state = {
       email: '',
@@ -94,6 +95,7 @@ function mapState(state) {
 
 const actionCreators = {
   login: userActions.login,
+  logout: userActions.logout
 }
 
 const LoginPage = connect(mapState, actionCreators)(Login);

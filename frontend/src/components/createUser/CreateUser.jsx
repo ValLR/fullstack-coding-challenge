@@ -18,7 +18,7 @@ class CreateUser extends Component {
       user: {
         firstName: '',
         lastName: '',
-        gender: '',
+        gender: 'F',
         email: '',
         password: '',
       },
@@ -51,6 +51,7 @@ class CreateUser extends Component {
 
   render() {
     const { user } = this.state;
+    console.log(user.gender);
     return (
       <div>
         <h1 className="title">Crear usuario</h1>
@@ -67,9 +68,9 @@ class CreateUser extends Component {
             <FormGroup>
               <Label for="gender">Género</Label>
               <Input onChange={this.handleChange} type="select" name="gender" id="gender">
-                <option value="f">Femenino</option>
-                <option value="m">Masculino</option>
-                <option value="o">Otro</option>
+                <option value="F">Femenino</option>
+                <option value="M">Masculino</option>
+                <option value="O">Otro</option>
               </Input>
             </FormGroup>
             <FormGroup>

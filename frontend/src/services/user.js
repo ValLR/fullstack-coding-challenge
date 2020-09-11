@@ -2,6 +2,7 @@ const apiUrl = 'http://localhost:4000';
 
 export const userService = { 
   login,
+  logout,
   register
 };
 
@@ -31,15 +32,23 @@ function login(email, password) {
     });
 }
 
+function logout() {
+  localStorage.getItem('user');
+  localStorage.removeItem('user');
+}
+
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
 
     if(!response.ok) {
+      if(response === 401) {
+        logout();
+      }
       const error = response.status || (data && data.message);
+      
       return Promise.reject(error);
     }
-
     return data;
   });
 }
