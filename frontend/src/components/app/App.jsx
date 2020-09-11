@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 
 import { alertActions } from '../../actions';
 import { history } from '../../helpers';
-import CreateUser from '../createUser/CreateUser';
+
+import CreateUserPage from '../createUser/CreateUser';
 import './App.css';
 
 export default function App() {
@@ -17,7 +18,7 @@ export default function App() {
     <Router history={history}>
       <Switch>
         <Route exact path={'/create-account'}>
-          <CreateUser />
+          <CreateUserPage />
         </Route>
         <Redirect from="*" to="/create-account" />
       </Switch>
@@ -25,15 +26,11 @@ export default function App() {
   );
 }
 
-const mapStateToProps = (state) => {
+function mapState(state) {
   return {
-    counter: state.alert
+    alert: state.alert
   }
 }
 
-const actionDispatcher = {
-  clearAlerts: alertActions.clear,
-}
-
-const connectedApp = connect(mapStateToProps, actionDispatcher)(App);
+const connectedApp = connect(mapState)(App);
 export { connectedApp as App };
